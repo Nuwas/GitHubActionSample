@@ -1,0 +1,19 @@
+name: Build and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and Push
+        run: |
+           docker login --username nuwas --password ${{ secrets.GH_TAP }} ghcr.io
+           docker build . --tag ghcr.io/nuwas/hello-world-ghcr:latest
+           docker push ghcr.io/nuwas/hello-world-ghcr:latest
